@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Camera Capture Demo</title>
+</head>
+<body>
+  <h2>Camera Capture (User Consent Required)</h2>
+  <video id="video" width="320" height="240" autoplay></video>
+  <br>
+  <button id="snap">Take Photo</button>
+  <canvas id="canvas" width="320" height="240"></canvas>
+
+  <script>
+    const video = document.getElementById('video');
+
+    // Ask for webcam access
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+      })
+      .catch(err => {
+        alert('Camera access denied or not supported.');
+        console.error(err);
+      });
+
+    // Capture photo
+    document.getElementById("snap").addEventListener("click", () => {
+      const canvas = document.getElementById('canvas');
+      const context = canvas.getContext('2d');
+      context.drawImage(video, 0, 0, 320, 240);
+    });
+  </script>
+</body>
+</html>
